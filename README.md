@@ -1,5 +1,6 @@
 # Notes Pusher (Android)
 
+
 A single-screen Android app: type a note, tap one button, it's pushed to a
 GitHub repo's root directory as a new file named with the current date and
 time (e.g. `2026-07-27_14-32-05.md`). No reading, listing, or editing of
