@@ -34,6 +34,14 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          # AGP 8.5.2 supports Gradle 8.7-8.9. Without pinning this,
+          # setup-gradle installs whatever's currently "latest" (Gradle 9.x
+          # as of this workflow's first run), which silently fails to
+          # generate the custom buildConfigField entries (GH_TOKEN etc.)
+          # while still generating the standard BuildConfig fields — the
+          # exact symptom that showed up as "Unresolved reference: GH_TOKEN".
+          gradle-version: '8.9'
 
       - name: Build debug APK
         run: gradle assembleDebug --no-daemon
