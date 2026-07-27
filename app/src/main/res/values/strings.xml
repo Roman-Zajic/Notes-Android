@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="hint_note">Type your note…</string>
-    <string name="btn_push">Push to GitHub</string>
+    <string name="btn_push">Save Note</string>
     <string name="btn_pushing">Pushing…</string>
     <string name="toast_saved">Saved</string>
     <string name="toast_empty">Nothing to push — type a note first.</string>
