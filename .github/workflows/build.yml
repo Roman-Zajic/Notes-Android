@@ -2,35 +2,43 @@ name: Build APK
 
 on:
   push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+    branches: [ main ]
+  workflow_dispatch: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
-          cache: 'gradle'
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build Debug APK
-        env:
-          NOTES_GH_TOKEN: ${{ secrets.NOTES_GH_TOKEN }}
-          NOTES_GH_REPO: ${{ secrets.NOTES_GH_REPO }}
-          NOTES_GH_BRANCH: ${{ secrets.NOTES_GH_BRANCH }}
-          NOTES_GH_SUBDIR: ${{ secrets.NOTES_GH_SUBDIR }}
-        run: ./gradlew assembleDebug
+      - name: Write secrets.properties
+        # Populated from this repo's own encrypted Actions secrets
+        # (Settings -> Secrets and variables -> Actions) — never committed,
+        # never visible in logs, never leaves GitHub's build runner.
+        run: |
+          cat > secrets.properties << EOF
+          GH_TOKEN=${{ secrets.NOTES_GH_TOKEN }}
+          GH_REPO=${{ secrets.NOTES_GH_REPO }}
+          GH_BRANCH=${{ secrets.NOTES_GH_BRANCH }}
+          GH_SUBDIR=${{ secrets.NOTES_GH_SUBDIR }}
+          EOF
 
-      - name: Upload APK Artifact
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug APK
+        run: gradle assembleDebug --no-daemon
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: notes-pusher-debug-apk
