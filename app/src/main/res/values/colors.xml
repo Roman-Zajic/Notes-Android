@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teal_900">#005A5A</color>
+    <color name="teal_700">#008282</color>
+    <color name="teal_400">#50C1C1</color>
+    <color name="teal_100">#95DFDB</color>
+    <color name="amber">#E1A01E</color>
+    <color name="red">#C41E3A</color>
+    <color name="ink">#012D2C</color>
+    <color name="surface_page">#F0FAFA</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="border">#D0ECEB</color>
+    <color name="hint_text">#7A9E9E</color>
+    <color name="white">#FFFFFF</color>
+</resources>
