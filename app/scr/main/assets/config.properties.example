@@ -1,0 +1,14 @@
+# Copy this file to "config.properties" (same folder) for LOCAL builds in
+# Android Studio. config.properties is gitignored and must never be
+# committed — it's read at RUNTIME from the app's assets, not baked in by
+# Gradle, so there's no build-time codegen involved at all.
+#
+# For CI builds (GitHub Actions), this file is generated automatically
+# from the repo's encrypted Actions secrets instead — see
+# .github/workflows/build-apk.yml.
+
+GH_TOKEN=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
+GH_REPO=Roman-Zajic/Notes
+GH_BRANCH=main
+# Leave blank to push to the repo's root ("main directory").
+GH_SUBDIR=
