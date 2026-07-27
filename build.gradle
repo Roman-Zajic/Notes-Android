@@ -1,72 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'com.android.application' version '8.5.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.24' apply false
 }
 
-// ── Secrets ──────────────────────────────────────────────────────────
-// GH_TOKEN / GH_REPO / GH_BRANCH / GH_SUBDIR are read from
-// secrets.properties at build time and baked into BuildConfig. This file
-// is gitignored and never committed — see secrets.properties.example for
-// the format. In CI (see .github/workflows/build-apk.yml), it's generated
-// on the fly from encrypted GitHub Actions repository secrets, so the
-// real token never touches source control either way.
-def secretsFile = rootProject.file("secrets.properties")
-def secrets = new Properties()
-if (secretsFile.exists()) {
-    secretsFile.withInputStream { secrets.load(it) }
-}
-def ghToken  = secrets.getProperty("GH_TOKEN", "")
-def ghRepo   = secrets.getProperty("GH_REPO", "")
-def ghBranch = secrets.getProperty("GH_BRANCH", "main")
-def ghSubdir = secrets.getProperty("GH_SUBDIR", "")
-
-android {
-    namespace 'com.romanzajic.notespusher'
-    compileSdk 34
-
-    defaultConfig {
-        applicationId "com.romanzajic.notespusher"
-        minSdk 26
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-
-        buildConfigField "String", "GH_TOKEN", "\"${ghToken}\""
-        buildConfigField "String", "GH_REPO", "\"${ghRepo}\""
-        buildConfigField "String", "GH_BRANCH", "\"${ghBranch}\""
-        buildConfigField "String", "GH_SUBDIR", "\"${ghSubdir}\""
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-        debug {
-            // Debug builds are auto-signed with Gradle's generated debug
-            // keystore — that's enough to install on your own device via
-            // "unknown sources"; no signing setup needed for personal use.
-        }
-    }
-
-    buildFeatures {
-        buildConfig true
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
-
-dependencies {
-    implementation 'androidx.core:core-ktx:1.13.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    // No networking library on purpose — java.net.HttpURLConnection (built
-    // into Android) plus org.json (also built in) is enough for one PUT
-    // call, and keeping dependencies minimal keeps the CI build simple.
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
