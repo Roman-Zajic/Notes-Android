@@ -20,6 +20,18 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Restore persistent debug keystore
+        # Without this, every CI run gets a brand-new auto-generated debug
+        # keystore (fresh VM each time), so each build is signed with a
+        # different key -- Android then refuses to install a new APK over
+        # an existing install ("signatures don't match"), which looked
+        # like config changes "not taking effect" but was really just the
+        # OLD app silently failing to update. Restoring the same keystore
+        # every time keeps every build's signature identical.
+        run: |
+          mkdir -p ~/.android
+          echo "${{ secrets.NOTES_DEBUG_KEYSTORE_B64 }}" | base64 -d > ~/.android/debug.keystore
+
       - name: Write runtime config asset
         # Populated from this repo's own encrypted Actions secrets
         # (Settings -> Secrets and variables -> Actions) -- never
@@ -36,6 +48,19 @@ jobs:
           GH_BRANCH=${{ secrets.NOTES_GH_BRANCH }}
           GH_SUBDIR=${{ secrets.NOTES_GH_SUBDIR }}
           EOF
+
+      - name: Verify secrets are actually populated (never prints full values)
+        run: |
+          echo "GH_TOKEN length: ${#NOTES_GH_TOKEN}"
+          echo "GH_TOKEN prefix: ${NOTES_GH_TOKEN:0:11}"
+          echo "GH_REPO: '$NOTES_GH_REPO'"
+          echo "GH_BRANCH: '$NOTES_GH_BRANCH'"
+          echo "GH_SUBDIR: '$NOTES_GH_SUBDIR'"
+        env:
+          NOTES_GH_TOKEN: ${{ secrets.NOTES_GH_TOKEN }}
+          NOTES_GH_REPO: ${{ secrets.NOTES_GH_REPO }}
+          NOTES_GH_BRANCH: ${{ secrets.NOTES_GH_BRANCH }}
+          NOTES_GH_SUBDIR: ${{ secrets.NOTES_GH_SUBDIR }}
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
