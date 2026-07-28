@@ -1,5 +1,6 @@
 package com.romanzajic.notespusher
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
 import android.widget.Button
@@ -52,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         config = loadConfig()
 
         pushButton.setOnClickListener { onPushClicked() }
+        findViewById<android.widget.TextView>(R.id.viewNotesBtn).setOnClickListener {
+            startActivity(Intent(this, NotesListActivity::class.java))
+        }
     }
 
     /** Reads assets/config.properties, if present. Returns an empty

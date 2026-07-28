@@ -5,22 +5,42 @@
     android:layout_height="match_parent"
     android:background="@color/surface_page">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/titleBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:background="@color/teal_900"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="18dp"
         android:paddingBottom="18dp"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/viewNotesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:text="@string/view_notes_btn"
+            android:textColor="@color/teal_100"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/noteInput"
