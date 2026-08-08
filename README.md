@@ -1,10 +1,33 @@
 # Notes Pusher (Android)
 
-A single-screen Android app: type a note, tap one button, it's pushed to a
-GitHub repo's root directory as a new file named with the current date and
-time (e.g. `2026-07-27_14-32-05.md`). No reading, listing, or editing of
-existing notes — write-only, on purpose. After a successful push the screen
-clears for the next note.
+A small Android app: type a note, tap one button, it's pushed to a GitHub
+repo's root directory as a new file named with the current date and time
+(e.g. `2026-07-27_14-32-05.md`). After a successful push the screen clears
+for the next note.
+
+**View Notes** (top-right of the main screen) opens the rest of the app:
+
+- **Folder tree**, same shape as the desktop Notes module's sidebar —
+  folders built from `/` in each note's path, tap a folder to expand or
+  collapse it.
+- **Search** filters the tree as you type, two ways at once: instantly by
+  filename/path (local), and by phrase-in-content using GitHub's code
+  search API (one extra network call, debounced ~200ms) — the phone-side
+  equivalent of the desktop app's server-side full-text search. Matches
+  are highlighted in amber and every folder auto-expands while a search is
+  active, same as the desktop app.
+- **Tap a note** to open it in **Preview** mode — markdown rendered as HTML
+  (via marked.js, loaded from a CDN inside a WebView) styled with the same
+  teal/amber palette as the desktop Notes module.
+- **Edit** button switches to a plain text editor with the raw markdown;
+  **Save** pushes the change back to the same file in GitHub (using the
+  Contents API's update-in-place call, keyed by the file's current blob
+  `sha`, which is fetched alongside the note automatically).
+
+Note: GitHub's code search only indexes the repo's **default branch**. If
+`GH_BRANCH` is set to something else, phrase search still works for
+filenames (local filter) but content matches on that branch may not show
+up until it's merged to default.
 
 This app cannot be compiled locally in this chat environment (no access to
 the Android SDK), so it builds automatically on GitHub's own servers via the

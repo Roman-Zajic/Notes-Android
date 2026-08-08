@@ -22,12 +22,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <EditText
+        android:id="@+id/noteSearchInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_textarea"
+        android:hint="@string/search_hint"
+        android:textColorHint="@color/hint_text"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/ink"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/listTitleBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ProgressBar
         android:id="@+id/listProgress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/listTitleBar"
+        app:layout_constraintTop_toBottomOf="@id/noteSearchInput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -41,7 +62,7 @@
         android:textColor="@color/hint_text"
         android:textSize="14sp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/listTitleBar"
+        app:layout_constraintTop_toBottomOf="@id/noteSearchInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -51,7 +72,7 @@
         android:layout_height="0dp"
         android:divider="@color/border"
         android:dividerHeight="1dp"
-        app:layout_constraintTop_toBottomOf="@id/listTitleBar"
+        app:layout_constraintTop_toBottomOf="@id/noteSearchInput"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

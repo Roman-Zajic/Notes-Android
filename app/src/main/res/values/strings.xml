@@ -10,4 +10,12 @@
     <string name="view_notes_btn">View Notes</string>
     <string name="notes_list_title">Notes</string>
     <string name="no_notes_found">No notes found.</string>
+    <string name="no_matching_notes">No matching notes.</string>
+    <string name="search_hint">Search notes…</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_preview">Preview</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_saving">Saving…</string>
+    <string name="toast_note_saved">Note saved</string>
+    <string name="error_save_failed">Save failed</string>
 </resources>
